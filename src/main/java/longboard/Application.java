@@ -1,4 +1,4 @@
-package longboardadvice.application;
+package longboard;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 /**
  * Created by ArtemParfenov on 12.07.2019.
  */
-@SpringBootApplication(scanBasePackages = "simple")
+@SpringBootApplication
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

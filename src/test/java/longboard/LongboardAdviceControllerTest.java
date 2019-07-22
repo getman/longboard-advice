@@ -1,6 +1,4 @@
-package longboardadvice.application;
-
-/**
+package longboard; /**
  * Created by ArtemParfenov on 13.07.2019.
  */
 import static org.hamcrest.Matchers.equalTo;
@@ -20,7 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class LongboardAdviseControllerTest {
+public class LongboardAdviceControllerTest {
 
     @Autowired
     private MockMvc mvc;

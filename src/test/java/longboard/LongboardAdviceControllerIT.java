@@ -1,6 +1,4 @@
-package longboardadvice.application;
-
-/**
+package longboard; /**
  * Created by ArtemParfenov on 13.07.2019.
  */
 import static org.hamcrest.Matchers.*;

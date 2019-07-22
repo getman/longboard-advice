@@ -1,4 +1,4 @@
-package longboardadvice.controller;
+package longboard;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @RestController
-public class LongboardAdviseController {
+public class LongboardAdviceController {
 
     @RequestMapping("/")
     public String index() {
