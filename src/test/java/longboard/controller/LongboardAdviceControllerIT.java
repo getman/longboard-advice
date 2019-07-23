@@ -1,11 +1,11 @@
-package longboard; /**
- * Created by ArtemParfenov on 13.07.2019.
- */
+package longboard.controller;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.net.URL;
 
+import longboard.Application;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,8 +16,12 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+/** Integration test
+ * Created by ArtemParfenov on 13.07.2019.
+ */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+classes = Application.class)
 public class LongboardAdviceControllerIT {
 
     @LocalServerPort
