@@ -14,7 +14,7 @@ public class YandexServiceImpl implements YandexService {
 
     @Override
     public String getWeather() {
-        return yaClient.requestYandexWeatherData();
+        return yaClient.requestYandexWeatherData().toString();
     }
 
 
