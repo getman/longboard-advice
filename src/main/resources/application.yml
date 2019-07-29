@@ -1,0 +1,9 @@
+logging:
+  level:
+    org.springframework: ERROR
+    longboard: TRACE
+  pattern:
+    console: "%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"
+    file: "%d %p %c{1.} [%t] %m%n"
+  file: app.log
+  config: classpath:logback.xml
