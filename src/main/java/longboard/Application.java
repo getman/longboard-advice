@@ -22,9 +22,9 @@ public class Application {
         SpringApplication.run(Application.class, args);
         int currentMinute = 0;
         while (true) {
-            if (Calendar.getInstance().get(Calendar.SECOND) != currentMinute) {
+            if (Calendar.getInstance().get(Calendar.MINUTE) != currentMinute) {
                 log.info("bip");
-                currentMinute = Calendar.getInstance().get(Calendar.SECOND);
+                currentMinute = Calendar.getInstance().get(Calendar.MINUTE);
             }
         }
     }

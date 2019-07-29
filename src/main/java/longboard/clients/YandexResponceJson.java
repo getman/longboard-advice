@@ -10,6 +10,7 @@ public class YandexResponceJson {
 
     private String now;
     private String now_dt;
+    private FactWeatherData fact;
 
     public YandexResponceJson() {
     }
@@ -30,11 +31,20 @@ public class YandexResponceJson {
         this.now_dt = now_dt;
     }
 
+    public FactWeatherData getFact() {
+        return fact;
+    }
+
+    public void setFact(FactWeatherData fact) {
+        this.fact = fact;
+    }
+
     @Override
     public String toString() {
         return "YandexResponceJson{" +
                 "now=" + now +
                 ", now_dt='" + now_dt + '\'' +
+                ", fact=" + fact +
                 '}';
     }
 }
