@@ -1,4 +1,4 @@
-package longboard.controller;
+package longboard.controller.rest;
 
 import lombok.extern.slf4j.Slf4j;
 import longboard.service.YandexService;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @RestController
-public class LongboardAdviceController {
+public class LongboardAdviceRestController {
     @Autowired
     private YandexService yandexService;
 
@@ -21,9 +21,9 @@ public class LongboardAdviceController {
         return "Greetings from Spring Boot!";
     }
 
-    @RequestMapping("/get")
+    @RequestMapping("/get-json")
     public String getAdvice() {
-        log.debug("/get was called");
+        log.debug("/get-json was called");
         return yandexService.getWeather();
     }
 

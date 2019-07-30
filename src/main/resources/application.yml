@@ -7,3 +7,9 @@ logging:
     file: "%d %p %c{1.} [%t] %m%n"
   file: app.log
   config: classpath:logback.xml
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
