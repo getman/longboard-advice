@@ -2,6 +2,8 @@ package longboard.clients;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+
 /**
  * Created by ArtemParfenov on 23.07.2019.
  */
@@ -10,7 +12,9 @@ public class YandexResponceJson {
 
     private String now;
     private String now_dt;
+    /**current weather data*/
     private FactWeatherData fact;
+    private List<DayForecast> forecasts;
 
     public YandexResponceJson() {
     }
@@ -39,12 +43,21 @@ public class YandexResponceJson {
         this.fact = fact;
     }
 
+    public List<DayForecast> getForecasts() {
+        return forecasts;
+    }
+
+    public void setForecasts(List<DayForecast> forecasts) {
+        this.forecasts = forecasts;
+    }
+
     @Override
     public String toString() {
         return "YandexResponceJson{" +
                 "now=" + now +
                 ", now_dt='" + now_dt + '\'' +
                 ", fact=" + fact +
+                ", forecasts=" + forecasts +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package longboard.service;
 
 import longboard.clients.YandexClient;
+import longboard.clients.YandexResponceJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,8 @@ public class YandexServiceImpl implements YandexService {
     private YandexClient yaClient;
 
     @Override
-    public String getWeather() {
-        return yaClient.requestYandexWeatherData().toString();
+    public YandexResponceJson getWeather() {
+        return yaClient.requestYandexWeatherData();
     }
 
 
