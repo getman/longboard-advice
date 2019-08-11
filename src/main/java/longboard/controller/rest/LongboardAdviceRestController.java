@@ -1,7 +1,8 @@
 package longboard.controller.rest;
 
 import lombok.extern.slf4j.Slf4j;
-import longboard.clients.YandexResponceJson;
+import longboard.clients.YandexResponseDto;
+import longboard.clients.YandexResponseJson;
 import longboard.service.YandexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,7 @@ public class LongboardAdviceRestController {
     }
 
     @RequestMapping("/get-json")
-    public YandexResponceJson getAdvice() {
+    public YandexResponseDto getAdvice() {
         log.debug("/get-json was called");
         return yandexService.getWeather();
     }

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by ArtemParfenov on 23.07.2019.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class YandexResponceJson {
+public class YandexResponseJson {
 
     private String now;
     private String now_dt;
@@ -16,7 +16,7 @@ public class YandexResponceJson {
     private FactWeatherData fact;
     private List<DayForecast> forecasts;
 
-    public YandexResponceJson() {
+    public YandexResponseJson() {
     }
 
     public String getNow() {
@@ -53,7 +53,7 @@ public class YandexResponceJson {
 
     @Override
     public String toString() {
-        return "YandexResponceJson{" +
+        return "YandexResponseJson{" +
                 "now=" + now +
                 ", now_dt='" + now_dt + '\'' +
                 ", fact=" + fact +

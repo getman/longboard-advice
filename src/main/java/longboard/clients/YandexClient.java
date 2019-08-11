@@ -7,6 +7,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ import java.util.Map;
 @CacheConfig(cacheNames = {"yandexweather"})
 public class YandexClient {
     @Cacheable
-    public YandexResponceJson requestYandexWeatherData() {
+    public YandexResponseDto requestYandexWeatherData() {
         log.debug("YandexClient. Weather for moscow was requested");
         RestTemplate restTemplate = new RestTemplate();
         Map<String, Object> params = new HashMap<>();
@@ -28,10 +29,13 @@ public class YandexClient {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Yandex-API-Key", "f00433c0-0060-4ef8-b9bb-72debb6b719f");
         HttpEntity entity = new HttpEntity<>(headers);
-        ResponseEntity<YandexResponceJson> response = restTemplate.exchange(url, HttpMethod.GET, entity,
-                YandexResponceJson.class, params);
+        ResponseEntity<YandexResponseJson> response = restTemplate.exchange(url, HttpMethod.GET, entity,
+                YandexResponseJson.class, params);
         log.trace("Yandex.Weather respond with:{}", response.getBody());
-        return response.getBody();
+        return YandexResponseDto.builder()
+                .yandexResponseJson(response.getBody())
+                .serviceCallSuccessTime(new Date())
+                .build();
     }
 
 
