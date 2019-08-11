@@ -1,6 +1,8 @@
 package longboard.clients;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -13,7 +15,9 @@ import java.util.Map;
  */
 @Slf4j
 @Component
+@CacheConfig(cacheNames = {"yandexweather"})
 public class YandexClient {
+    @Cacheable
     public YandexResponceJson requestYandexWeatherData() {
         log.debug("YandexClient. Weather for moscow was requested");
         RestTemplate restTemplate = new RestTemplate();
