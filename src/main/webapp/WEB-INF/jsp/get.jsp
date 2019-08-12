@@ -5,7 +5,6 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="javax.xml.datatype.DatatypeFactory" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.*" %>
 <%@ page import="longboard.clients.YandexResponseDto" %>
 <html>
@@ -15,7 +14,7 @@
 <%!
    public String getStyleTag(boolean isToday, Date nowTime, Date forecastDateStartPeriod, Date forecastDateEndPeriod) {
        if (isToday && nowTime.after(forecastDateStartPeriod) && nowTime.before(forecastDateEndPeriod)) {
-         return "style=\"color:red;\"";
+         return "style=\"color:red;font-weight: bold\"";
       } else if (isToday && nowTime.after(forecastDateEndPeriod)) {
           return "style=\"color:grey;\"";
        } else {
@@ -66,8 +65,8 @@ boolean isToday = now.equals(forecastLocalDate);%>
 date: <b><%= isToday ? "TODAY: " :
      forecastLocalDate.format(DateTimeFormatter.ofPattern("dd-MM-uuuu"))%></b><br>
 <%--for the current forecast we have to style the day part (current or past)--%>
-   <% calendarStartPeriod.set(Calendar.HOUR, 0);
-      calendarEndPeriod.set(Calendar.HOUR, 6);
+   <% calendarStartPeriod.set(Calendar.HOUR_OF_DAY, 0);
+      calendarEndPeriod.set(Calendar.HOUR_OF_DAY, 6);
       Date forecastDateStartPeriod = calendarStartPeriod.getTime();
       Date forecastDateEndPeriod = calendarEndPeriod.getTime();%>
 <span <%= getStyleTag(isToday, nowTime, forecastDateStartPeriod, forecastDateEndPeriod)%> >night: <%= nextForecast.getParts().getNight().getTemp_min()%>~
