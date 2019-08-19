@@ -1,8 +1,11 @@
 package longboard.clients;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by ArtemParfenov on 30.07.2019.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FactWeatherData {
     private String temp;
     private String feels_like;

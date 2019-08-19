@@ -1,4 +1,4 @@
-#Description
+## Description
 Simple SpringBoot application that uses different weather services to give an advice to ride or not to ride on the longboard  
 
 ## Requirements
