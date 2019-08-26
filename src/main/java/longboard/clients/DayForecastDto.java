@@ -10,7 +10,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DayForecast {
+public class DayForecastDto {
     private XMLGregorianCalendar date;
-    private WeatherForDay parts;
+    private WeatherForDayDto parts;
 }

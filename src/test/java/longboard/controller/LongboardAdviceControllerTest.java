@@ -65,12 +65,37 @@ public class LongboardAdviceControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.yandexResponseJson.now_dt").value("2019-08-13T08:49:08.376Z"))
-                .andExpect(jsonPath("$.yandexResponseJson.fact.temp").value("22"))
-                .andExpect(jsonPath("$.yandexResponseJson.fact.feels_like").value("23"))
-                .andExpect(jsonPath("$.yandexResponseJson.forecasts[0].parts.night.temp_min").value("12"))
-                .andExpect(jsonPath("$.yandexResponseJson.forecasts[0].parts.night.temp_max").value("15"))
-                .andExpect(jsonPath("$.yandexResponseJson.forecasts[0].parts.day.temp_min").value("21"))
-                .andExpect(jsonPath("$.yandexResponseJson.forecasts[0].parts.day.temp_max").value("23"));
+                .andExpect(jsonPath("$.now.temp").value("22"))
+                .andExpect(jsonPath("$.now.feelsLike").value("23"))
+                .andExpect(jsonPath("$.forecasts[0].night.tmin").value("12"))
+                .andExpect(jsonPath("$.forecasts[0].night.tmax").value("15"))
+                .andExpect(jsonPath("$.forecasts[0].night.rainAndCloud").value("PARTLY_CLOUDLY"))
+                .andExpect(jsonPath("$.forecasts[0].day.tmin").value("21"))
+                .andExpect(jsonPath("$.forecasts[0].day.tmax").value("23"))
+                .andExpect(jsonPath("$.forecasts[0].day.rainAndCloud").value("CLOUDLY_AND_LIGHT_RAIN"));
+    }
+
+    @Test
+    public void shouldThrowAnExceptionWhenYandexTempIsNotDigit() {
+        /**public final class ConditionConverter {
+         public static Condition fromYandexFactConditions(FactWeatherDto yandexFactCondition) {
+         return Condition.builder()
+         .temp(Short.parseShort(yandexFactCondition.getTemp()))
+         .rainAndCloud(fromYandexRainAndCloud(yandexFactCondition.getCondition()))
+         .build();
+         }
+         }*/
+    }
+
+    @Test
+    public void shouldNotFailIfYandexResponseContainsNullValues() {
+        /**Condition.builder()
+         .temp(Optional.ofNullable(yandexFactCondition)
+         .map(FactWeatherDto::getCondition)
+         .filter(Objects::nonNull)
+         .map(cond -> Short.parseShort(cond))
+         .orElse(null))
+         .rainAndCloud(fromYandexRainAndCloud(yandexFactCondition.getCondition()))
+         .build();*/
     }
 }

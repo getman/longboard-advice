@@ -1,34 +1,27 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="longboard.clients.YandexResponseJson" %>
-<%@ page import="longboard.clients.DayForecast" %>
 <%@ page import="javax.xml.datatype.XMLGregorianCalendar" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="javax.xml.datatype.DatatypeFactory" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.util.*" %>
-<%@ page import="longboard.clients.YandexResponseDto" %>
+<%@ page import="longboard.util.HtmlStyle" %>
+<%@ page import="static longboard.advice.Advisor.getAdvice" %>
+<%@ page import="longboard.model.Weather" %>
+<%@ page import="longboard.model.Condition" %>
+<%@ page import="longboard.model.DayForecast" %>
 <html>
 <head><title>Hello world Example</title></head>
 <body>
 <h1>Current weather is: </h1>
-<%!
-   public String getStyleTag(boolean isToday, Date nowTime, Date forecastDateStartPeriod, Date forecastDateEndPeriod) {
-       if (isToday && nowTime.after(forecastDateStartPeriod) && nowTime.before(forecastDateEndPeriod)) {
-         return "style=\"color:red;font-weight: bold\"";
-      } else if (isToday && nowTime.after(forecastDateEndPeriod)) {
-          return "style=\"color:grey;\"";
-       } else {
-         return "";
-      }
-   }
-%>
 
-<% YandexResponseJson x = ((YandexResponseDto)request.getAttribute("weather")).getYandexResponseJson();%>
-t: <%= x != null ? x.getFact().getTemp() : "undefined"%><br>
-feel like: <%=x != null ? x.getFact().getFeels_like() : "undefined"%><br>
-condition: <%=x != null ? x.getFact().getCondition() : "undefined"%><br>
+<% Weather weather = (Weather)request.getAttribute("weather");%>
+<% Condition x = ((Weather)request.getAttribute("weather")).getNow();%>
+t: <%= x != null ? x.getTemp() : "undefined"%><br>
+feel like: <%=x != null ? x.getFeelsLike() : "undefined"%><br>
+condition: <%=x != null ? x.getRainAndCloud() : "undefined"%><br>
 
-<% List<DayForecast> f = x != null ? x.getForecasts() : Collections.emptyList();%>
+advice: <%=getAdvice(weather)%><br>
+<% List<DayForecast> f = weather != null ? weather.getForecasts() : Collections.emptyList();%>
 <% final GregorianCalendar nowGregCal = new GregorianCalendar();
 XMLGregorianCalendar nowXmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(nowGregCal);
 LocalDate now = LocalDate.of(nowXmlCal.getYear(),
@@ -40,7 +33,7 @@ Date nowTime = nowXmlCal.toGregorianCalendar().getTime();%>
 <% Calendar nowCallTimeCalendar = Calendar.getInstance();
    Calendar serviceResponseTimeCalendar = Calendar.getInstance();
    serviceResponseTimeCalendar.setTime(
-           ((YandexResponseDto)request.getAttribute("weather")).getServiceCallSuccessTime());
+           ((Weather)request.getAttribute("weather")).getServiceCallSuccessTime());
    serviceResponseTimeCalendar.add(Calendar.SECOND, 5);
 %>
 <%if (serviceResponseTimeCalendar.before(nowCallTimeCalendar)) {%>
@@ -58,9 +51,7 @@ calendarEndPeriod.set(Calendar.SECOND, 0);
 %>
 <h1>Weather by day part: </h1>
 <% for (DayForecast nextForecast: f) {%>
-<% LocalDate forecastLocalDate = LocalDate.of(nextForecast.getDate().getYear(),
-     nextForecast.getDate().getMonth(),
-     nextForecast.getDate().getDay());
+<% LocalDate forecastLocalDate = nextForecast.getDate();
 boolean isToday = now.equals(forecastLocalDate);%>
 date: <b><%= isToday ? "TODAY: " :
      forecastLocalDate.format(DateTimeFormatter.ofPattern("dd-MM-uuuu"))%></b><br>
@@ -69,30 +60,30 @@ date: <b><%= isToday ? "TODAY: " :
       calendarEndPeriod.set(Calendar.HOUR_OF_DAY, 6);
       Date forecastDateStartPeriod = calendarStartPeriod.getTime();
       Date forecastDateEndPeriod = calendarEndPeriod.getTime();%>
-<span <%= getStyleTag(isToday, nowTime, forecastDateStartPeriod, forecastDateEndPeriod)%> >night: <%= nextForecast.getParts().getNight().getTemp_min()%>~
-   <%= nextForecast.getParts().getNight().getTemp_max()%>,
-   <%= nextForecast.getParts().getNight().getCondition()%></span><br>
+<span <%= HtmlStyle.getDayPartStyleTag(isToday, nowTime, forecastDateStartPeriod, forecastDateEndPeriod)%> >night:
+   <%= nextForecast.getNight().getTMin()%>~<%= nextForecast.getNight().getTMax()%>,
+   <%= nextForecast.getNight().getRainAndCloud()%></span><br>
    <% calendarStartPeriod.set(Calendar.HOUR_OF_DAY, 6);
       calendarEndPeriod.set(Calendar.HOUR_OF_DAY, 12);
       forecastDateStartPeriod = calendarStartPeriod.getTime();
       forecastDateEndPeriod = calendarEndPeriod.getTime();%>
-<span <%= getStyleTag(isToday, nowTime, forecastDateStartPeriod, forecastDateEndPeriod)%> >morning: <%= nextForecast.getParts().getMorning().getTemp_min()%>~
-   <%= nextForecast.getParts().getMorning().getTemp_max()%>,
-   <%= nextForecast.getParts().getMorning().getCondition()%></span><br>
+<span <%= HtmlStyle.getDayPartStyleTag(isToday, nowTime, forecastDateStartPeriod, forecastDateEndPeriod)%> >morning:
+   <%= nextForecast.getMorning().getTMin()%>~<%= nextForecast.getMorning().getTMax()%>,
+   <%= nextForecast.getMorning().getRainAndCloud()%></span><br>
    <% calendarStartPeriod.set(Calendar.HOUR_OF_DAY, 12);
       calendarEndPeriod.set(Calendar.HOUR_OF_DAY, 18);
       forecastDateStartPeriod = calendarStartPeriod.getTime();
       forecastDateEndPeriod = calendarEndPeriod.getTime();%>
-<span <%= getStyleTag(isToday, nowTime, forecastDateStartPeriod, forecastDateEndPeriod)%> >day:<%= nextForecast.getParts().getDay().getTemp_min()%>~
-   <%= nextForecast.getParts().getDay().getTemp_max()%>,
-   <%= nextForecast.getParts().getDay().getCondition()%></span><br>
+<span <%= HtmlStyle.getDayPartStyleTag(isToday, nowTime, forecastDateStartPeriod, forecastDateEndPeriod)%> >day:
+   <%= nextForecast.getDay().getTMin()%>~<%= nextForecast.getDay().getTMax()%>,
+   <%= nextForecast.getDay().getRainAndCloud()%></span><br>
    <% calendarStartPeriod.set(Calendar.HOUR_OF_DAY, 18);
       calendarEndPeriod.set(Calendar.HOUR_OF_DAY, 24);
       forecastDateStartPeriod = calendarStartPeriod.getTime();
       forecastDateEndPeriod = calendarEndPeriod.getTime();%>
-<span <%= getStyleTag(isToday, nowTime, forecastDateStartPeriod, forecastDateEndPeriod)%> >evening: <%= nextForecast.getParts().getEvening().getTemp_min()%>~
-   <%= nextForecast.getParts().getEvening().getTemp_max()%>,
-   <%= nextForecast.getParts().getEvening().getCondition()%></span><br>
+<span <%= HtmlStyle.getDayPartStyleTag(isToday, nowTime, forecastDateStartPeriod, forecastDateEndPeriod)%> >evening:
+   <%= nextForecast.getEvening().getTMin()%>~<%= nextForecast.getEvening().getTMax()%>,
+   <%= nextForecast.getEvening().getRainAndCloud()%></span><br>
 --------------------------------------<br>
 <% }%>
 

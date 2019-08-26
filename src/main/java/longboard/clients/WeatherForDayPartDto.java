@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WeatherForDayPart {
+public class WeatherForDayPartDto {
     private String temp_min;
     private String temp_max;
     private String condition;
