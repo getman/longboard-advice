@@ -9,7 +9,7 @@
            maxElementsInMemory="100"
            eternal="false"
            overflowToDisk="false"
-           timeToLiveSeconds="30"
+           timeToLiveSeconds="1850"
            timeToIdleSeconds="0"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">

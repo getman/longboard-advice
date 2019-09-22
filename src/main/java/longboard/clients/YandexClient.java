@@ -25,9 +25,9 @@ public class YandexClient {
         Map<String, Object> params = new HashMap<>();
         params.put("lat", "55.75396");
         params.put("lon", "37.620393");
-        String url = "https://api.weather.yandex.ru/v1/forecast/?lat=55.75396&lon=37.620393";
+        String url = "https://api.weather.yandex.ru/v1/informers/?lat=55.75396&lon=37.620393";
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-Yandex-API-Key", "f00433c0-0060-4ef8-b9bb-72debb6b719f");
+        headers.set("X-Yandex-API-Key", "8f612c37-1e1a-4c2a-a93a-8d37c00ff3b7");
         HttpEntity entity = new HttpEntity<>(headers);
         ResponseEntity<YandexResponseJson> response = restTemplate.exchange(url, HttpMethod.GET, entity,
                 YandexResponseJson.class, params);
